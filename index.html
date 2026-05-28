@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conflict Management Styles Assessment — NURS-RN 407</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0C3460;
+    --navy-mid: #185FA5;
+    --navy-light: #E6F1FB;
+    --navy-pale: #F0F6FD;
+    --gold: #B8860B;
+    --gold-mid: #D4A017;
+    --gold-light: #FDF3DC;
+    --gold-pale: #FFFBF0;
+    --white: #FFFFFF;
+    --text: #1a1a2e;
+    --text-mid: #3d4466;
+    --text-soft: #6b7280;
+    --border: #C8DCF0;
+    --radius: 14px;
+    --radius-sm: 8px;
+  }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: #F4F7FB;
+    color: var(--text);
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  /* ── Header bar ── */
+  .site-header {
+    background: var(--navy);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .site-header .monogram {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--gold-mid);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Lora', serif;
+    font-size: 14px; font-weight: 600;
+    color: var(--navy);
+    flex-shrink: 0;
+  }
+  .site-header .hd-text p:first-child {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--gold-mid);
+  }
+  .site-header .hd-text p:last-child {
+    font-size: 13px; color: #B5D4F4; margin-top: 1px;
+  }
+
+  /* ── Main container ── */
+  .container {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 32px 20px 60px;
+  }
+
+  /* ── Pages ── */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ── Hero card ── */
+  .hero {
+    background: var(--navy);
+    border-radius: var(--radius);
+    padding: 32px 28px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(212,160,23,0.08);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: 40px;
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    background: rgba(184,134,11,0.06);
+    pointer-events: none;
+  }
+  .hero .eyebrow {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--gold-mid); margin-bottom: 10px;
+  }
+  .hero h1 {
+    font-family: 'Lora', serif;
+    font-size: 26px; font-weight: 600;
+    color: #fff; line-height: 1.3;
+    margin-bottom: 6px;
+  }
+  .hero .subtitle {
+    font-size: 14px; color: #B5D4F4; line-height: 1.5;
+  }
+
+  /* ── Section card ── */
+  .card {
+    background: var(--white);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px 24px;
+    margin-bottom: 16px;
+  }
+  .card-gold {
+    background: var(--gold-pale);
+    border: 0.5px solid #E8D5A0;
+    border-radius: var(--radius);
+    padding: 22px 24px;
+    margin-bottom: 16px;
+  }
+  .card-blue {
+    background: var(--navy-pale);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px 24px;
+    margin-bottom: 16px;
+  }
+
+  /* ── Instructor note ── */
+  .instructor-note {
+    background: var(--navy-pale);
+    border-left: 3px solid var(--gold-mid);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 18px 20px;
+    margin-bottom: 16px;
+  }
+  .instructor-note .note-label {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.07em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 8px;
+  }
+  .instructor-note p {
+    font-size: 14px; line-height: 1.75;
+    color: var(--text-mid);
+  }
+
+  /* ── Section label ── */
+  .section-label {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--navy-mid); margin-bottom: 12px;
+  }
+  .section-label-gold {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 12px;
+  }
+
+  /* ── How to use list ── */
+  .how-list { display: flex; flex-direction: column; gap: 12px; }
+  .how-item { display: flex; gap: 12px; align-items: flex-start; }
+  .how-num {
+    min-width: 26px; height: 26px;
+    border-radius: 50%;
+    background: var(--navy);
+    color: var(--gold-mid);
+    font-size: 12px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 1px;
+  }
+  .how-item p { font-size: 14px; line-height: 1.65; color: var(--text-mid); }
+
+  /* ── Buttons ── */
+  .btn {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 11px 22px;
+    border-radius: var(--radius-sm);
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 14px; font-weight: 500;
+    cursor: pointer; transition: all 0.15s ease;
+    border: none;
+  }
+  .btn-primary {
+    background: var(--navy);
+    color: #fff;
+  }
+  .btn-primary:hover { background: #0a2d54; }
+  .btn-secondary {
+    background: var(--white);
+    color: var(--navy);
+    border: 0.5px solid var(--border);
+  }
+  .btn-secondary:hover { background: var(--navy-pale); }
+  .btn-gold {
+    background: var(--gold-mid);
+    color: var(--navy);
+    font-weight: 600;
+  }
+  .btn-gold:hover { background: var(--gold); color: #fff; }
+  .nav-row { display: flex; gap: 10px; margin-top: 8px; flex-wrap: wrap; }
+
+  /* ── Progress ── */
+  .progress-wrap {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 16px;
+  }
+  .progress-label { font-size: 12px; color: var(--navy-mid); white-space: nowrap; min-width: 60px; }
+  .progress-track {
+    flex: 1; height: 6px;
+    background: var(--border);
+    border-radius: 6px; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; border-radius: 6px;
+    background: var(--gold-mid);
+    transition: width 0.3s ease;
+  }
+
+  /* ── Question card ── */
+  .q-header {
+    background: var(--navy);
+    border-radius: var(--radius) var(--radius) 0 0;
+    padding: 18px 24px;
+    margin-bottom: 0;
+  }
+  .q-header .eyebrow {
+    font-size: 11px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: #B5D4F4;
+    margin-bottom: 4px;
+  }
+  .q-header p {
+    font-size: 15px; font-weight: 500; color: #fff; line-height: 1.4;
+  }
+  .q-scale-row {
+    background: var(--gold-pale);
+    border: 0.5px solid #E8D5A0;
+    display: flex; justify-content: space-between;
+    padding: 8px 24px; font-size: 11px; color: var(--gold);
+    font-weight: 500;
+  }
+  .questions-body {
+    background: var(--white);
+    border: 0.5px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 var(--radius) var(--radius);
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .q-row {
+    display: flex; align-items: center;
+    gap: 12px; padding: 14px 24px;
+    border-bottom: 0.5px solid #EBF2FA;
+    transition: background 0.1s;
+  }
+  .q-row:last-child { border-bottom: none; }
+  .q-row:hover { background: var(--navy-pale); }
+  .q-num {
+    font-size: 12px; font-weight: 600;
+    color: var(--gold); min-width: 20px;
+  }
+  .q-text { font-size: 14px; color: var(--text); flex: 1; line-height: 1.5; }
+  .radio-group { display: flex; gap: 6px; flex-shrink: 0; }
+  .radio-btn {
+    width: 28px; height: 28px; border-radius: 50%;
+    border: 1.5px solid var(--border);
+    background: var(--white);
+    font-size: 11px; font-weight: 500; color: var(--text-soft);
+    cursor: pointer; transition: all 0.12s ease;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Source Sans 3', sans-serif;
+  }
+  .radio-btn:hover { border-color: var(--navy-mid); color: var(--navy); background: var(--navy-pale); }
+  .radio-btn.selected { background: var(--navy); border-color: var(--navy); color: #fff; }
+  .radio-btn.selected-gold { background: var(--gold-mid); border-color: var(--gold-mid); color: var(--navy); font-weight: 700; }
+
+  /* error highlight */
+  .q-row.unanswered { background: #FFF8F0; }
+  .q-row.unanswered .q-num { color: #c0392b; }
+
+  /* ── Results ── */
+  .result-hero {
+    background: var(--navy);
+    border-radius: var(--radius);
+    padding: 28px 28px 24px;
+    margin-bottom: 16px;
+  }
+  .result-hero .eyebrow {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--gold-mid); margin-bottom: 8px;
+  }
+  .result-hero h2 {
+    font-family: 'Lora', serif;
+    font-size: 24px; font-weight: 600;
+    color: #fff; margin-bottom: 4px;
+  }
+  .result-hero .sub {
+    font-size: 14px; color: #B5D4F4;
+  }
+
+  /* score bars */
+  .score-item { margin-bottom: 14px; }
+  .score-item:last-child { margin-bottom: 0; }
+  .score-meta {
+    display: flex; justify-content: space-between;
+    font-size: 13px; margin-bottom: 5px;
+  }
+  .score-name { color: var(--text); }
+  .score-name.primary { font-weight: 600; color: var(--navy); }
+  .score-val { font-weight: 600; color: var(--navy-mid); }
+  .score-val.primary { color: var(--gold); }
+  .bar-track {
+    height: 10px; background: var(--navy-pale);
+    border-radius: 6px; overflow: hidden;
+  }
+  .bar-fill-el {
+    height: 100%; border-radius: 6px;
+    transition: width 0.8s cubic-bezier(.4,0,.2,1);
+  }
+
+  /* style cards */
+  .style-card {
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    background: var(--white);
+  }
+  .style-card.is-primary {
+    border: 1.5px solid var(--navy-mid);
+    background: var(--navy-pale);
+  }
+  .style-card-header {
+    display: flex; align-items: center;
+    gap: 10px; margin-bottom: 6px;
+  }
+  .style-badge {
+    font-size: 11px; font-weight: 600;
+    padding: 3px 10px; border-radius: 20px;
+    background: var(--navy-light); color: var(--navy);
+  }
+  .style-badge.primary-badge {
+    background: var(--gold-mid); color: var(--navy);
+  }
+  .style-card p { font-size: 13px; color: var(--text-mid); line-height: 1.65; }
+  .when-to-use {
+    font-size: 12px; font-weight: 600;
+    color: var(--navy-mid); margin-top: 8px; margin-bottom: 3px;
+    text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .when-to-use-text { font-size: 12px; color: var(--text-soft); line-height: 1.6; }
+
+  /* ── Footer attribution ── */
+  .attribution {
+    font-size: 11px; color: var(--text-soft);
+    line-height: 1.6; margin-top: 20px;
+    padding-top: 16px;
+    border-top: 0.5px solid var(--border);
+  }
+
+  /* ── Validation message ── */
+  .validation-msg {
+    display: none;
+    background: #FFF3CD;
+    border: 0.5px solid #F0C850;
+    border-radius: var(--radius-sm);
+    padding: 10px 16px;
+    font-size: 13px; color: #7D5A00;
+    margin-bottom: 12px;
+  }
+  .validation-msg.show { display: block; }
+
+  /* ── Print styles ── */
+  @media print {
+    body { background: white; }
+    .site-header { background: var(--navy) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .hero, .result-hero, .card-navy { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .nav-row, .validation-msg { display: none !important; }
+    .bar-fill-el { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .page { display: none !important; }
+    #page-results { display: block !important; }
+  }
+
+  @media (max-width: 480px) {
+    .container { padding: 20px 14px 50px; }
+    .hero { padding: 22px 18px; }
+    .hero h1 { font-size: 22px; }
+    .q-row { flex-wrap: wrap; gap: 8px; }
+    .radio-group { padding-left: 32px; }
+    .card, .card-gold, .card-blue { padding: 16px 16px; }
+    .q-row { padding: 12px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="monogram">BSU</div>
+  <div class="hd-text">
+    <p>Boise State University</p>
+    <p>NURS-RN 407 · Concepts of Leadership &amp; Management</p>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- ════════════════════════════════
+       PAGE 1: INTRO
+  ════════════════════════════════ -->
+  <div class="page active" id="page-intro">
+
+    <div class="hero">
+      <p class="eyebrow">Communication, Conflict Management &amp; Team Building</p>
+      <h1>Conflict Management Styles Assessment</h1>
+      <p class="subtitle">Discover how you naturally respond to conflict — and what that means for your growth as a nursing leader.</p>
+    </div>
+
+    <div class="instructor-note">
+      <p class="note-label">A note from your instructor</p>
+      <p>As a nurse, you will encounter conflict — with colleagues, with patients, with systems that don't always work the way they should. This isn't a flaw in your career path; it's a reality of working in high-stakes, team-based care. The question isn't <em>whether</em> you'll face conflict, but <em>how</em> you'll navigate it when it arrives.</p>
+      <br>
+      <p>This assessment gives you a window into your own instincts. Understanding your default style — and knowing when it serves you and when it doesn't — is one of the most practical leadership tools you can carry into practice. Every nurse leads. This is part of learning how.</p>
+    </div>
+
+    <div class="card">
+      <div class="section-label">How to use your results</div>
+      <div class="how-list">
+        <div class="how-item">
+          <div class="how-num">1</div>
+          <p>Recognize your go-to response under pressure — and honestly ask yourself whether it's actually serving the situation</p>
+        </div>
+        <div class="how-item">
+          <div class="how-num">2</div>
+          <p>Understand all five styles so you can flex into them intentionally — effective leaders aren't locked into one mode</p>
+        </div>
+        <div class="how-item">
+          <div class="how-num">3</div>
+          <p>Connect this to how your team functions — your conflict style shapes the environment and culture you create for others</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-gold">
+      <div class="section-label-gold">Before you begin</div>
+      <p style="font-size:14px; color:var(--text-mid); line-height:1.7;">This takes about 5 minutes. Read each statement and rate how often it describes you — from 1 (rarely) to 5 (always). Be honest; there are no right or wrong answers. Your results are calculated right in your browser and nothing is collected or stored. You're welcome to print or save your results, but this assessment is for <em>you</em>.</p>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn btn-primary" onclick="startAssessment()">
+        Start the assessment &rarr;
+      </button>
+    </div>
+
+    <div class="attribution">
+      Assessment adapted from Reginald Adkins, Ph.D. (Elemental Truths Blog), as used by the University of North Florida Dean of Students Office. Based on the Thomas-Kilmann Conflict Mode Instrument. Adapted for educational use only. No data is collected.
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════
+       PAGE 2: QUESTIONS
+  ════════════════════════════════ -->
+  <div class="page" id="page-questions">
+
+    <div class="progress-wrap">
+      <span class="progress-label" id="progress-label">0 of 15</span>
+      <div class="progress-track">
+        <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+      </div>
+    </div>
+
+    <div class="q-header">
+      <p class="eyebrow">15 questions &nbsp;·&nbsp; rate 1 (rarely) to 5 (always)</p>
+      <p>In the past 6 months, how often did you do the following to handle conflicts?</p>
+    </div>
+    <div class="q-scale-row">
+      <span>1 = Rarely</span>
+      <span>2 = Seldom</span>
+      <span>3 = Sometimes</span>
+      <span>4 = Often</span>
+      <span>5 = Always</span>
+    </div>
+
+    <div class="questions-body" id="questions-body"></div>
+
+    <div class="validation-msg" id="validation-msg">
+      Please answer all 15 questions before continuing. Unanswered questions are highlighted above.
+    </div>
+
+    <div class="nav-row">
+      <button class="btn btn-secondary" onclick="showPage('page-intro')">← Back</button>
+      <button class="btn btn-primary" onclick="submitAssessment()">See my results &rarr;</button>
+    </div>
+
+    <div class="attribution">
+      Assessment adapted from Reginald Adkins, Ph.D. (Elemental Truths Blog), as used by the University of North Florida Dean of Students Office. Based on the Thomas-Kilmann Conflict Mode Instrument. Educational use only.
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════
+       PAGE 3: RESULTS
+  ════════════════════════════════ -->
+  <div class="page" id="page-results">
+
+    <div class="result-hero" id="result-hero">
+      <p class="eyebrow">Your results</p>
+      <h2 id="result-heading">Your primary style: —</h2>
+      <p class="sub" id="result-sub">Score: — / 15</p>
+    </div>
+
+    <div class="card">
+      <div class="section-label">All five scores</div>
+      <div id="score-bars"></div>
+    </div>
+
+    <div class="instructor-note" id="nursing-context">
+      <p class="note-label">What this means for your nursing practice</p>
+      <p id="nursing-context-text"></p>
+    </div>
+
+    <div class="card-blue">
+      <div class="section-label">All five styles — descriptions &amp; when each fits</div>
+      <div id="style-descriptions"></div>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn btn-secondary" onclick="retake()">← Retake</button>
+      <button class="btn btn-gold" onclick="window.print()">Print / Save as PDF</button>
+    </div>
+
+    <div class="attribution">
+      Assessment adapted from Reginald Adkins, Ph.D. (Elemental Truths Blog), as used by the University of North Florida Dean of Students Office. Based on the Thomas-Kilmann Conflict Mode Instrument. Educational use only. No data is collected or stored.
+    </div>
+  </div>
+
+</main>
+
+<script>
+// ── Question data ──
+// Each question maps to a style: C=Competing, AC=Accommodating, CO=Compromising, AV=Avoiding, CL=Collaborating
+const questions = [
+  { id: 1,  text: "If someone disagrees with me, I vigorously defend my side of the issue.", style: "Competing" },
+  { id: 2,  text: "I go along with suggestions from peers, even if I don't agree with them.", style: "Accommodating" },
+  { id: 3,  text: "I give-and-take so that an agreement can be reached.", style: "Compromising" },
+  { id: 4,  text: "I keep my opinions to myself rather than openly disagree with people.", style: "Avoiding" },
+  { id: 5,  text: "In disagreements or negotiations, I try to find the best possible solutions for both sides by sharing information.", style: "Collaborating" },
+  { id: 6,  text: "I try to reach a middle ground in disputes with other people.", style: "Compromising" },
+  { id: 7,  text: "I go along with the wishes of people who have different points of view than my own.", style: "Accommodating" },
+  { id: 8,  text: "I refrain from openly debating issues where there is disagreement.", style: "Avoiding" },
+  { id: 9,  text: "In negotiations, I hold on to my position rather than give in.", style: "Competing" },
+  { id: 10, text: "I try to solve conflicts by finding solutions that benefit both me and the other person.", style: "Collaborating" },
+  { id: 11, text: "I let peers have their way rather than jeopardize our relationship.", style: "Accommodating" },
+  { id: 12, text: "I try to win my position in a discussion.", style: "Competing" },
+  { id: 13, text: "I investigate conflicts with peers so that we can discover solutions that benefit both of us.", style: "Collaborating" },
+  { id: 14, text: "It is not worth the time and trouble discussing my differences of opinion with other people.", style: "Avoiding" },
+  { id: 15, text: "To reach an agreement, I give up some things in exchange for others.", style: "Compromising" }
+];
+
+// ── Style data ──
+const styleData = {
+  Competing: {
+    description: "Individuals who compete can be assertive and focused on their own goals. They may value being right or reaching their objective over maintaining the relationship with the other party.",
+    when: "A quick, decisive action is required — such as an emergency situation. You are certain you are correct, or that a clear direction is in the best interest of everyone involved.",
+    nursing: "In clinical settings, Competing can be life-saving: when a patient is deteriorating and you need to advocate firmly and immediately, this is exactly the right tool. The risk is using it in situations that require more nuance — it can damage team trust over time if it becomes your default."
+  },
+  Accommodating: {
+    description: "Individuals who accommodate often put the needs of others before their own. They generally value relationships over personal goals, and tend to prioritize harmony in the moment.",
+    when: "The issue is minor and the outcome doesn't significantly matter. Harmony genuinely takes priority, or it's important to let someone else learn from their own experience.",
+    nursing: "Accommodating can keep a team stable and prevent unnecessary friction. But nurses who default to this style may struggle to advocate for patients or speak up when something is wrong. Your voice matters — and sometimes the most caring thing you can do is use it."
+  },
+  Compromising: {
+    description: "Those who compromise are willing to give up something to gain something in return — meeting in the middle between two positions. This style values practical resolution.",
+    when: "Everyone involved is willing to be flexible. A partial win is acceptable. Or as a practical backup when full collaboration isn't possible.",
+    nursing: "Compromising is one of the most versatile styles in team-based care. Shift scheduling, resource allocation, care planning disagreements — these often need a workable middle ground rather than a perfect solution. It's a practical, relationship-preserving tool."
+  },
+  Avoiding: {
+    description: "These individuals may step back from conflict, sometimes setting aside their goals or the relationship to sidestep the issue entirely. They may need time or distance to process.",
+    when: "You need time to think before acting. The issue is genuinely trivial. Or emotions are running too high for a productive conversation right now.",
+    nursing: "Avoiding is often misread as weakness — but strategically stepping back can prevent escalation and give you time to approach a situation more effectively. The risk is when avoidance becomes chronic: unresolved conflict in healthcare teams has real consequences for patient safety and staff wellbeing."
+  },
+  Collaborating: {
+    description: "Collaborators use both assertiveness and cooperation to work with others toward solutions that benefit everyone. They see conflict as an opportunity to strengthen relationships and reduce tension.",
+    when: "The concerns of everyone involved genuinely matter. There is a high degree of trust among the people involved. A creative or lasting solution is worth the time investment.",
+    nursing: "Collaborating is the gold standard for most complex clinical and team situations — but it takes time and trust. It's the foundation of high-functioning nursing teams and the kind of leadership that creates psychological safety. The challenge: not every situation allows for it. Knowing when to shift to another style is equally important."
+  }
+};
+
+// ── Nursing context by primary style ──
+const nursingContext = {
+  Competing: "Your dominant style is <strong>Competing</strong> — when you believe something is right, you pursue it with conviction. In nursing, this instinct can be powerful: advocating firmly for a patient, speaking up about a safety concern, or holding a standard when others are cutting corners. These moments demand exactly this kind of directness. The growth edge is recognizing when the situation calls for more collaboration — and having the range to shift when it does. The styles you scored lowest in are worth practicing.",
+  Accommodating: "Your dominant style is <strong>Accommodating</strong> — you prioritize relationships and harmony, and you're skilled at keeping teams stable. In nursing, this matters enormously. The growth edge is building confidence in your own voice: advocacy for patients, colleagues, and safe practice sometimes requires you to push back, even when it's uncomfortable. The styles you scored lowest in are worth exploring — particularly Collaborating and Competing.",
+  Compromising: "Your dominant style is <strong>Compromising</strong> — you're practical, flexible, and skilled at finding workable middle ground. In nursing leadership, this is a highly versatile tool. You're likely effective at resolving scheduling conflicts, care planning disagreements, and interpersonal friction without major fallout. The growth edge is recognizing when a situation deserves more than a compromise — when the right answer is to collaborate fully, or to hold firm. Notice your lowest-scoring styles.",
+  Avoiding: "Your dominant style is <strong>Avoiding</strong> — you tend to step back from conflict, sometimes needing space to process before engaging. In nursing, strategic de-escalation and thoughtful timing are genuine skills. The growth edge is distinguishing between helpful pause and habitual avoidance. Unresolved conflict in healthcare teams affects patient safety and staff wellbeing — and your perspective matters. The styles you scored lowest in, particularly Collaborating and Competing, are worth practicing.",
+  Collaborating: "Your dominant style is <strong>Collaborating</strong> — you instinctively seek solutions that work for everyone, and you see conflict as a chance to strengthen relationships rather than a battle to win. In nursing, this creates the psychological safety that high-performing teams run on. The growth edge: Collaborating takes time, and not every clinical moment has it. Notice your lower-scoring styles — the ability to Compete when needed or Compromise efficiently are skills worth building alongside your natural strength."
+};
+
+// ── State ──
+let answers = {};
+
+// ── Build question list ──
+function buildQuestions() {
+  const body = document.getElementById('questions-body');
+  body.innerHTML = '';
+  questions.forEach(q => {
+    const row = document.createElement('div');
+    row.className = 'q-row';
+    row.id = 'qrow-' + q.id;
+
+    const num = document.createElement('span');
+    num.className = 'q-num';
+    num.textContent = q.id;
+
+    const text = document.createElement('span');
+    text.className = 'q-text';
+    text.textContent = q.text;
+
+    const group = document.createElement('div');
+    group.className = 'radio-group';
+
+    for (let v = 1; v <= 5; v++) {
+      const btn = document.createElement('button');
+      btn.className = 'radio-btn';
+      btn.textContent = v;
+      btn.setAttribute('aria-label', 'Question ' + q.id + ', score ' + v);
+      btn.onclick = () => selectAnswer(q.id, v);
+      btn.id = 'q' + q.id + 'v' + v;
+      group.appendChild(btn);
+    }
+
+    row.appendChild(num);
+    row.appendChild(text);
+    row.appendChild(group);
+    body.appendChild(row);
+  });
+}
+
+// ── Select an answer ──
+function selectAnswer(qId, value) {
+  answers[qId] = value;
+
+  // Update radio buttons for this question
+  for (let v = 1; v <= 5; v++) {
+    const btn = document.getElementById('q' + qId + 'v' + v);
+    btn.className = 'radio-btn' + (v === value ? ' selected' : '');
+  }
+
+  // Remove unanswered highlight
+  const row = document.getElementById('qrow-' + qId);
+  row.classList.remove('unanswered');
+
+  // Update progress
+  updateProgress();
+}
+
+// ── Progress bar ──
+function updateProgress() {
+  const count = Object.keys(answers).length;
+  document.getElementById('progress-label').textContent = count + ' of 15';
+  document.getElementById('progress-fill').style.width = Math.round((count / 15) * 100) + '%';
+}
+
+// ── Page nav ──
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function startAssessment() {
+  showPage('page-questions');
+}
+
+// ── Submit & score ──
+function submitAssessment() {
+  // Validate all 15 answered
+  const unanswered = questions.filter(q => !answers[q.id]);
+  if (unanswered.length > 0) {
+    document.getElementById('validation-msg').classList.add('show');
+    unanswered.forEach(q => {
+      document.getElementById('qrow-' + q.id).classList.add('unanswered');
+    });
+    document.getElementById('qrow-' + unanswered[0].id).scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+  document.getElementById('validation-msg').classList.remove('show');
+
+  // Calculate scores
+  const scores = { Competing: 0, Accommodating: 0, Compromising: 0, Avoiding: 0, Collaborating: 0 };
+  questions.forEach(q => { scores[q.style] += answers[q.id]; });
+
+  // Sort by score descending
+  const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+  const [primaryStyle, primaryScore] = sorted[0];
+
+  // Render results
+  document.getElementById('result-heading').textContent = 'Your primary style: ' + primaryStyle;
+  document.getElementById('result-sub').textContent = 'Score: ' + primaryScore + ' / 15 — all five styles ranked below';
+
+  // Score bars
+  const barsEl = document.getElementById('score-bars');
+  barsEl.innerHTML = '';
+  const maxScore = 15;
+  const barColors = ['#0C3460', '#185FA5', '#378ADD', '#B8860B', '#D4A017'];
+  sorted.forEach(([style, score], i) => {
+    const isPrimary = i === 0;
+    const pct = Math.round((score / maxScore) * 100);
+    const div = document.createElement('div');
+    div.className = 'score-item';
+    div.innerHTML = `
+      <div class="score-meta">
+        <span class="score-name${isPrimary ? ' primary' : ''}">${style}${isPrimary ? ' ★' : ''}</span>
+        <span class="score-val${isPrimary ? ' primary' : ''}">${score}</span>
+      </div>
+      <div class="bar-track">
+        <div class="bar-fill-el" style="width:0%; background:${barColors[i]};" data-width="${pct}%"></div>
+      </div>`;
+    barsEl.appendChild(div);
+  });
+
+  // Nursing context
+  document.getElementById('nursing-context-text').innerHTML = nursingContext[primaryStyle];
+
+  // Style descriptions — primary first, then rest
+  const descEl = document.getElementById('style-descriptions');
+  descEl.innerHTML = '';
+  sorted.forEach(([style], i) => {
+    const data = styleData[style];
+    const isPrimary = i === 0;
+    const card = document.createElement('div');
+    card.className = 'style-card' + (isPrimary ? ' is-primary' : '');
+    card.innerHTML = `
+      <div class="style-card-header">
+        <span class="style-badge${isPrimary ? ' primary-badge' : ''}">${style}</span>
+        ${isPrimary ? '<span style="font-size:12px;color:var(--navy-mid);font-weight:500;">Your dominant style</span>' : ''}
+      </div>
+      <p>${data.description}</p>
+      <p class="when-to-use">When to use</p>
+      <p class="when-to-use-text">${data.when}</p>
+      <p class="when-to-use">In nursing</p>
+      <p class="when-to-use-text">${data.nursing}</p>`;
+    descEl.appendChild(card);
+  });
+
+  showPage('page-results');
+
+  // Animate bars after render
+  setTimeout(() => {
+    document.querySelectorAll('.bar-fill-el').forEach(el => {
+      el.style.width = el.getAttribute('data-width');
+    });
+  }, 100);
+}
+
+// ── Retake ──
+function retake() {
+  answers = {};
+  buildQuestions();
+  updateProgress();
+  showPage('page-questions');
+}
+
+// ── Init ──
+buildQuestions();
+</script>
+</body>
+</html>
